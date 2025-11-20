@@ -73,7 +73,7 @@ pub async fn signup(
     )
     .bind(user_id)
     .bind(&req.email)
-    .bind(password_hash)
+    .bind(Some(password_hash))
     .bind(req.full_name)
     .bind(req.phone_num)
     .fetch_one(&state.pool)
@@ -110,7 +110,15 @@ pub async fn login(
         .await?
         .ok_or(AppError::AuthError)?;
 
-    if !verify(req.password.as_bytes(), &user.password_hash)
+    // Check if user has a password hash (not a Google OAuth-only user)
+    let password_hash = user.password_hash.as_ref().ok_or_else(|| {
+        AppError::BadRequest(
+            "This account uses Google Sign-In. Please use the 'Sign in with Google' button."
+                .to_string(),
+        )
+    })?;
+
+    if !verify(req.password.as_bytes(), password_hash)
         .map_err(|e| AppError::InternalError(e.into()))?
     {
         return Err(AppError::AuthError);
@@ -1206,8 +1214,15 @@ pub async fn update_user_password(
         .await?
         .ok_or(AppError::NotFound)?;
 
+    // Check if user has a password (not a Google OAuth-only user)
+    let current_password_hash = user.password_hash.as_ref().ok_or_else(|| {
+        AppError::BadRequest(
+            "This account uses Google Sign-In and doesn't have a password.".to_string(),
+        )
+    })?;
+
     // Verify current password
-    if !verify(req.current_password.as_bytes(), &user.password_hash)
+    if !verify(req.current_password.as_bytes(), current_password_hash)
         .map_err(|e| AppError::InternalError(e.into()))?
     {
         return Err(AppError::AuthError);

@@ -40,7 +40,7 @@ pub struct User {
     pub id: Uuid,
     pub email: String,
     #[serde(skip_serializing)]
-    pub password_hash: String,
+    pub password_hash: Option<String>,
     pub full_name: String,
     pub phone_num: Option<String>,
     pub image: Option<String>,
