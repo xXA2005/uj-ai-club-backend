@@ -1,0 +1,35 @@
+[package]
+name = "uj-ai-club-backend"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { version = "*", features = ["full"] }
+axum = { version = "0.7", features = ["macros", "multipart"] }
+tower-http = { version = "*", features = ["cors", "fs"] }
+sqlx = { version = "*", features = ["runtime-tokio-rustls", "postgres", "time", "uuid"] }
+serde = { version = "*", features = ["derive"] }
+serde_json = "*"
+jsonwebtoken = { version = "*", features = ["rust_crypto"] }
+bcrypt = "*"
+dotenv = "*"
+tracing = "*"
+tracing-subscriber = { version = "*", features = ["env-filter"] }
+anyhow = "*"
+thiserror = "*"
+uuid = { version = "*", features = ["serde", "v4"] }
+time = { version = "*", features = ["serde"] }
+once_cell = "*"
+chrono = "*"
+tokio-util = { version = "*", features = ["io"] }
+bytes = "*"
+oauth2 = "4.4.2"
+reqwest = { version = "*", features = ["json", "rustls-tls"] }
+url = "*"
+serde_urlencoded = "*"
+urlencoding = "*"
+
+[dev-dependencies]
+reqwest = { version = "*", features = ["json"] }
+tokio-test = "*"
+tower = "*"

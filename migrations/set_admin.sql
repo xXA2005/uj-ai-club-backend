@@ -1,0 +1,1 @@
+UPDATE users SET role = 'admin' WHERE email = 'a2005balila@gmail.com';

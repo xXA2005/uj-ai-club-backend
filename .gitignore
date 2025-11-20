@@ -1,0 +1,31 @@
+# Rust
+/target
+Cargo.lock
+
+# Environment variables
+.env
+
+# Docker
+docker-compose.override.yml
+
+# SSL certificates and Certbot
+certbot/
+*.pem
+*.crt
+*.key
+
+# Logs
+*.log
+nginx/logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.iml
