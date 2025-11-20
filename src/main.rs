@@ -28,7 +28,7 @@ async fn main() -> anyhow::Result<()> {
 
     let addr: SocketAddr = server_addr.parse()?;
 
-    tracing::info!("Starting server on {} yoo", addr);
+    tracing::info!("Starting server on {} yo", addr);
 
     let listener = tokio::net::TcpListener::bind(addr).await?;
     axum::serve(listener, app).await?;
